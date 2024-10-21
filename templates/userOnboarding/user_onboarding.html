@@ -11,12 +11,148 @@
     <div class="container">
         <div class="form-box">
             <h2>Complete Your Profile</h2>
-            <form method="POST">
+            
+            <!-- Tabs for Sections -->
+            <div class="tab">
+                <button class="tablinks active" onclick="openTab(event, 'Profile')">Profile Information</button>
+                <button class="tablinks" onclick="openTab(event, 'Health')">Health Information</button>
+                <button class="tablinks" onclick="openTab(event, 'Education')">Education Information</button>
+                <button class="tablinks" onclick="openTab(event, 'Event')">Event Information</button>
+                <button class="tablinks" onclick="openTab(event, 'Finance')">Finance Information</button>
+            </div>
+
+            <!-- Form -->
+            <form method="POST" action="{% url 'user_onboarding' %}">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Save</button>
+                
+                <!-- Profile Information -->
+                <div id="Profile" class="tabcontent active">
+                    <h3>Profile Information</h3>
+                    <div>
+                        <label for="first_name">First Name</label>
+                        {{ form.first_name }}
+                    </div>
+                    <div>
+                        <label for="last_name">Last Name</label>
+                        {{ form.last_name }}
+                    </div>
+                    <div>
+                        <label for="birth_date">Birth Date</label>
+                        {{ form.birth_date }}
+                    </div>
+                    <div>
+                        <label for="gender">Gender</label>
+                        {{ form.gender }}
+                    </div>
+                    <div>
+                        <label for="role">Role</label>
+                        {{ form.role }}
+                    </div>
+                </div>
+
+                <!-- Health Information -->
+                <div id="Health" class="tabcontent">
+                    <h3>Health Information</h3>
+                    <div class="sections-container">
+                        <div class="section-fields">
+                            <hr class="section-divider">     
+                            <label for="condition">Condition</label>
+                            {{ form.condition }}
+
+                            <label for="doctor">Doctor</label>
+                            <input type="text" name="doctor_name" placeholder="Doctor Name" class="form-control">
+
+                            <label for="health_description">Description</label>
+                            {{ form.health_description }}
+
+                            <label for="date_recorded">Date Recorded</label>
+                            {{ form.date_recorded }}
+
+                            <!-- Delete button to remove this section -->
+                            <button type="button" class="delete-section" onclick="removeSection(this)">X</button>
+                        </div> 
+                    </div>
+                    <button type="button" onclick="addNewSection('Health')">Add More</button>
+                </div>
+
+                <!-- Education Information -->
+                <div id="Education" class="tabcontent">
+                    <h3>Education Information</h3>
+                    <div class="sections-container">
+                        <div class="section-fields">
+                            <hr class="section-divider">     
+                            <label for="school">School</label>
+                            {{ form.school }}
+
+                            <label for="class_record">Class</label>
+                            {{ form.class_record }}
+
+                            <label for="teacher">Teacher</label>
+                            {{ form.teacher }}
+
+                            <label for="grade">Grade</label>
+                            {{ form.grade }}
+                            <label for="date_started">Date Started</label>
+                            {{form.date_started}}
+                            <!-- Delete button to remove this section -->
+                            <button type="button" class="delete-section" onclick="removeSection(this)">X</button>
+                        </div> 
+                    </div>
+                    <button type="button" onclick="addNewSection('Education')">Add More</button>
+                </div>
+
+                <!-- Event Information -->
+                <div id="Event" class="tabcontent">
+                    <h3>Event Information</h3>
+                    <div class="sections-container">
+                        <div class="section-fields">
+                            <hr class="section-divider">     
+                            <label for="event_name">Event Name</label>
+                            {{ form.event_name }}
+
+                            <label for="event_date">Event Date</label>
+                            {{ form.event_date }}
+
+                            <label for="event_description">Event Description</label>
+                            {{ form.event_description }}
+
+                            <!-- Delete button to remove this section -->
+                            <button type="button" class="delete-section" onclick="removeSection(this)">X</button>
+                        </div> 
+                    </div>
+                    <button type="button" onclick="addNewSection('Event')">Add More</button>
+                </div>
+
+                <!-- Finance Information -->
+                <div id="Finance" class="tabcontent">
+                    <h3>Finance Information</h3>
+                    <div class="sections-container">
+                        <div class="section-fields">
+                            <hr class="section-divider">     
+                            <label for="transaction">Transaction</label>
+                            {{ form.transaction }}
+
+                            <label for="amount">Amount</label>
+                            {{ form.amount }}
+
+                            <label for="finance_date">Date</label>
+                            {{ form.finance_date }} <!-- Ensure this matches the field name in your form class -->
+
+                            <label for="finance_description">Description</label>
+                            {{ form.finance_description }}
+
+                            <!-- Delete button to remove this section -->
+                            <button type="button" class="delete-section" onclick="removeSection(this)">X</button>
+                        </div> 
+                    </div>
+                    <button type="button" onclick="addNewSection('Finance')">Add More</button>
+
+                    <!-- Submit Button only for Finance -->
+                    <button type="submit">Save</button>
+                </div>
             </form>
         </div>
     </div>
+    <script src="{% static 'js/userOnboarding/user_onboarding.js' %}"></script>
 </body>
 </html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %} <!-- Load static files -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        .tab-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background-color: #f1f1f1;
+            border-bottom: 1px solid #ccc;
+        }
+        
+        .tab-container button {
+            background-color: #f1f1f1;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 20px;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            flex: 1; /* Make each tab equal width */
+        }
+        
+        .tab-container button:hover {
+            background-color: #ddd;
+        }
+        
+        .tab-container button.active {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+
+        .family-member {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Your Dashboard, {{ profile.first_name }}!</h1>
+
+        <!-- Top Tab Navigation -->
+        <div class="tab-container">
+            <button class="tab-links active" onclick="openTab(event, 'Dashboard')">Dashboard</button>
+            <button class="tab-links" onclick="openTab(event, 'Profile')">Profile</button>
+            <button class="tab-links" onclick="openTab(event, 'Family')">Family</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="Dashboard" class="tab-content active">
+            <h3>Dashboard Overview</h3>
+            <p>Welcome to your dashboard! Here you can see a quick overview of your data.</p>
+        </div>
+
+        <div id="Profile" class="tab-content">
+            <h3>Your Profile</h3>
+            <p>First Name: {{ profile.first_name }}</p>
+            <p>Last Name: {{ profile.last_name }}</p>
+            <p>Birth Date: {{ profile.birth_date }}</p>
+            <p>Gender: {{ profile.get_gender_display }}</p>
+            <p>Role: {{ profile.get_role_display }}</p>
+        </div>
+
+        <div id="Family" class="tab-content">
+            <h3>Family Members</h3>
+            {% if family_members %}
+                {% for member in family_members %}
+                    <div class="family-member">
+                        <p>Name: {{ member.first_name }} {{ member.last_name }}</p>
+                        <p>Role: {{ member.get_role_display }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No family members found.</p>
+            {% endif %}
+
+            <!-- Form to Add New Family Member -->
+            <h4>Add New Family Member</h4>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Add Family Member</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle tab switching
+        function openTab(evt, tabName) {
+            var i, tabContent, tabLinks;
+
+            // Hide all tab contents
+            tabContent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+                tabContent[i].classList.remove("active");
+            }
+
+            // Remove active class from all tabs
+            tabLinks = document.getElementsByClassName("tab-links");
+            for (i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].classList.remove("active");
+            }
+
+            // Show the clicked tab and add active class to the button
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Show the default tab by default
+        document.getElementById("Dashboard").style.display = "block";
+    </script>
+</body>
+</html>

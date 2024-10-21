@@ -11,4 +11,4 @@ class ProfileAdmin(admin.ModelAdmin):
         ('Profile Details', {'fields': ('first_name', 'last_name', 'birth_date', 'gender')}),
     )
 
-admin.site.register(Profile, ProfileAdmin)  # Properly registering the model and admin class
+admin.site.register(Profile, ProfileAdmin)  
