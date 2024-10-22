@@ -52,3 +52,29 @@ Exit the SQLite shell:
 sql
 Copy code
 .exit
+
+
+
+go to right directoy 
+cd SmartFamily
+
+to start server
+http://127.0.0.1:8000/
+
+
+python manage.py createsuperuser
+
+
+
+
+to grab the new code new code from git repo
+
+git pull
+
+to add the new code to the git repo type
+
+git add .
+
+git commit -m 'new code'
+
+git push 
