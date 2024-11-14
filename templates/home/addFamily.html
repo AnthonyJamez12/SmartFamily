@@ -1,0 +1,100 @@
+
+    <h3>Family Members</h3>
+    {% if family_members %}
+        {% for member in family_members %}
+            <div class="family-member">
+                <p>Name: {{ member.first_name }} {{ member.last_name }}</p>
+                <p>Role: {{ member.get_role_display }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No family members found.</p>
+    {% endif %}
+
+    <!-- Form to Add New Family Member -->
+    <h4>Add New Family Member</h4>
+    <form method="POST" action="{% url 'home' %}">
+        {% csrf_token %}
+        {{ family_member_form.as_p }}
+        <button type="submit" name="add_family_member">Add Family Member</button>
+    </form>
+
+
+<style>
+    /* Family Section Styling */
+    #Family {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #Family h3, #Family h4 {
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .family-member {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        background-color: #ffffff;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+    }
+
+    .family-member p {
+        margin: 0;
+        font-size: 14px;
+        color: #555;
+    }
+
+    /* Add Family Member Form */
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    form h4 {
+        font-size: 18px;
+        color: #444;
+        margin-bottom: 15px;
+    }
+
+    form label {
+        font-size: 14px;
+        color: #333;
+    }
+
+    form input, form select, form button {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    form input:focus, form select:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
+    }
+
+    form button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+        background-color: #0056b3;
+    }
+</style>

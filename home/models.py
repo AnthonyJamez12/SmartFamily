@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+import uuid
 
 class Family(models.Model):
     family_name = models.CharField(max_length=255)  # Field to identify the family
-    
+    family_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+
     def __str__(self):
-        return self.family_name
+        return f"{self.family_name} (ID: {self.family_id})"
 
 
 class Profile(models.Model):
@@ -49,7 +50,8 @@ class HealthRecord(models.Model):
     condition = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     doctor = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True)  # Link to Doctor
-    date_recorded = models.DateField()
+    date_recorded = models.DateField(blank=True, null=True)
+
 
     def __str__(self):
         return f'{self.condition} for {self.profile.user.username}'
@@ -58,7 +60,7 @@ class HealthRecord(models.Model):
 # Teacher model for linking to class and education records
 class Teacher(models.Model):
     name = models.CharField(max_length=255)
-    email = models.EmailField(blank=True)  # Optional: Teacher's contact info
+    email = models.EmailField(blank=True, null=True)  # Optional: Teacher's contact info
 
     def __str__(self):
         return self.name
@@ -78,7 +80,7 @@ class EducationRecord(models.Model):
     school = models.CharField(max_length=255)
     class_record = models.ForeignKey(Class, on_delete=models.SET_NULL, null=True, blank=True)  # Link to Class
     description = models.TextField(blank=True)
-    date_started = models.DateField()
+    date_started = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.class_record.class_name if self.class_record else "No Class"} for {self.profile.user.username}'
@@ -88,7 +90,7 @@ class Event(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     event_name = models.CharField(max_length=255)
     event_date = models.DateField()
-    event_description = models.TextField(blank=True)
+    event_description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f'Event: {self.event_name} for {self.profile.user.username}'
@@ -99,7 +101,7 @@ class FinanceRecord(models.Model):
     transaction = models.CharField(max_length=255)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f'{self.transaction} for {self.profile.user.username}'

@@ -48,6 +48,11 @@
             padding: 10px;
             border-bottom: 1px solid #ccc;
         }
+
+        .family-member p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -56,52 +61,48 @@
 
         <!-- Top Tab Navigation -->
         <div class="tab-container">
-            <button class="tab-links active" onclick="openTab(event, 'Dashboard')">Dashboard</button>
-            <button class="tab-links" onclick="openTab(event, 'Profile')">Profile</button>
-            <button class="tab-links" onclick="openTab(event, 'Family')">Family</button>
+            <button class="tab-links active" onclick="openTab2(event, 'Profile')">Profile</button>
+            <button class="tab-links" onclick="openTab2(event, 'Edit')">Edit</button>
+            <button class="tab-links" onclick="openTab2(event, 'FamilyAdd')">Add Family</button>
+            <button class="tab-links" onclick="openTab2(event, 'FamilyMembers')">Family Members</button>
+
+            <a href="{% url 'logout' %}" class="logout-button">Logout</a>
         </div>
 
         <!-- Tab Content -->
-        <div id="Dashboard" class="tab-content active">
-            <h3>Dashboard Overview</h3>
-            <p>Welcome to your dashboard! Here you can see a quick overview of your data.</p>
+        <div id="Profile" class="tab-content active">
+            {% include 'home/profile.html' %}
         </div>
 
-        <div id="Profile" class="tab-content">
-            <h3>Your Profile</h3>
-            <p>First Name: {{ profile.first_name }}</p>
-            <p>Last Name: {{ profile.last_name }}</p>
-            <p>Birth Date: {{ profile.birth_date }}</p>
-            <p>Gender: {{ profile.get_gender_display }}</p>
-            <p>Role: {{ profile.get_role_display }}</p>
+        <div id="Edit" class="tab-content">
+            {% include 'home/edit.html' %}
         </div>
 
-        <div id="Family" class="tab-content">
+        <div id="FamilyAdd" class="tab-content">
+            {% include 'home/addFamily.html' %}
+        </div>
+
+        <!-- New Family Members Tab -->
+        <div id="FamilyMembers" class="tab-content">
             <h3>Family Members</h3>
             {% if family_members %}
                 {% for member in family_members %}
                     <div class="family-member">
-                        <p>Name: {{ member.first_name }} {{ member.last_name }}</p>
-                        <p>Role: {{ member.get_role_display }}</p>
+                        <p><strong>Name:</strong> {{ member.first_name }} {{ member.last_name }}</p>
+                        <p><strong>Birth Date:</strong> {{ member.birth_date }}</p>
+                        <p><strong>Gender:</strong> {{ member.get_gender_display }}</p>
+                        <p><strong>Role:</strong> {{ member.get_role_display }}</p>
                     </div>
                 {% endfor %}
             {% else %}
                 <p>No family members found.</p>
             {% endif %}
-
-            <!-- Form to Add New Family Member -->
-            <h4>Add New Family Member</h4>
-            <form method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Add Family Member</button>
-            </form>
         </div>
     </div>
 
     <script>
         // Function to handle tab switching
-        function openTab(evt, tabName) {
+        function openTab2(evt, tabName) {
             var i, tabContent, tabLinks;
 
             // Hide all tab contents
@@ -111,19 +112,22 @@
                 tabContent[i].classList.remove("active");
             }
 
-            // Remove active class from all tabs
+            // Remove active class from all tab links
             tabLinks = document.getElementsByClassName("tab-links");
             for (i = 0; i < tabLinks.length; i++) {
                 tabLinks[i].classList.remove("active");
             }
 
-            // Show the clicked tab and add active class to the button
+            // Show the selected tab content and set the button to active
             document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
 
-        // Show the default tab by default
-        document.getElementById("Dashboard").style.display = "block";
+        // Ensure that only the Profile tab content is displayed on load
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector(".tab-links.active").click();
+        });
     </script>
 </body>
 </html>

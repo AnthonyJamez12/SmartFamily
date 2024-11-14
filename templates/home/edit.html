@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/home/edit.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <h2>Complete Your Profile</h2>
+            
+            <!-- Tabs for Sections -->
+            <div class="edit-tab">
+                <button class="edit-tablinks active" onclick="openInnerTab(event, 'Profile2')">Profile Information</button>
+                <button class="edit-tablinks" onclick="openInnerTab(event, 'Health')">Health Information</button>
+                <button class="edit-tablinks" onclick="openInnerTab(event, 'Education')">Education Information</button>
+                <button class="edit-tablinks" onclick="openInnerTab(event, 'Event')">Event Information</button>
+                <button class="edit-tablinks" onclick="openInnerTab(event, 'Finance')">Finance Information</button>
+            </div>
+
+            <!-- Form -->
+            <form method="POST" action="{% url 'home' %}">
+                {% csrf_token %}
+                
+                <!-- Profile Information -->
+                <div id="Profile2" class="edit-tabcontent active">
+                    <h3>Profile Information</h3>
+                    <div>
+                        <label for="first_name">First Name</label>
+                        {{ onboarding_form.first_name }}
+                    </div>
+                    <div>
+                        <label for="last_name">Last Name</label>
+                        {{ onboarding_form.last_name }}
+                    </div>
+                    <div>
+                        <label for="birth_date">Birth Date</label>
+                        {{ onboarding_form.birth_date }}
+                    </div>
+                    <div>
+                        <label for="gender">Gender</label>
+                        {{ onboarding_form.gender }}
+                    </div>
+                    <div>
+                        <label for="role">Role</label>
+                        {{ onboarding_form.role }}
+                    </div>
+                </div>
+
+                <!-- Health Information -->
+                <div id="Health" class="edit-tabcontent">
+                    <h3>Health Information</h3>
+                    <div class="sections-container">
+                        {% for record in health_records %}
+                            <div class="section-fields">
+                                <hr class="section-divider">
+                                <label for="condition">Condition</label>
+                                <input type="text" name="condition" value="{{ record.condition }}" class="form-control">
+
+                                <label for="doctor">Doctor</label>
+                                <input type="text" name="doctor" value="{{ record.doctor.name }}" class="form-control">
+
+                                <label for="health_description">Description</label>
+                                <input type="text" name="health_description" value="{{ record.description }}" class="form-control">
+
+                                <label for="date_recorded">Date Recorded</label>
+                                <input type="date" name="date_recorded" value="{{ record.date_recorded|date:"Y-m-d" }}" class="form-control">
+
+                                <button type="button" class="delete-section" onclick="removeSection(this)">X</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" onclick="addNewSection('Health')">Add More</button>
+                </div>
+
+
+                <!-- Education Information -->
+                <div id="Education" class="edit-tabcontent">
+                    <h3>Education Information</h3>
+                    <div class="sections-container">
+                        {% for record in education_records %}
+                            <div class="section-fields">
+                                <hr class="section-divider">
+                                <label for="school">School</label>
+                                <input type="text" name="school" value="{{ record.school }}" class="form-control">
+
+                                <label for="class_record">Class</label>
+                                <input type="text" name="class_record" value="{{ record.class_record.class_name }}" class="form-control">
+
+                                <label for="teacher">Teacher</label>
+                                <input type="text" name="teacher" value="{{ record.class_record.teacher.name }}" class="form-control">
+
+                                <label for="grade">Grade</label>
+                                <input type="text" name="grade" value="{{ record.class_record.grade }}" class="form-control">
+
+                                <label for="date_started">Date Started</label>
+                                <input type="date" name="date_started" value="{{ record.date_started|date:"Y-m-d" }}" class="form-control">
+
+                                <!-- Delete button to remove this section -->
+                                <button type="button" class="delete-section" onclick="removeSection(this)">X</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" onclick="addNewSection('Education')">Add More</button>
+                </div>
+
+
+                <!-- Event Information -->
+                <div id="Event" class="edit-tabcontent">
+                    <h3>Event Information</h3>
+                    <div class="sections-container">
+                        {% for record in events %}
+                            <div class="section-fields">
+                                <hr class="section-divider">     
+                                <label for="event_name">Event Name</label>
+                                <input type="text" name="event_name" value="{{ record.event_name }}" class="form-control">
+                
+                                <label for="event_date">Event Date</label>
+                                <input type="date" name="event_date" value="{{ record.event_date|date:"Y-m-d" }}" class="form-control">
+                
+                                <label for="event_description">Event Description</label>
+                                <textarea name="event_description" class="form-control" rows="3">{{ record.event_description }}</textarea>
+                
+                                <!-- Delete button to remove this section -->
+                                <button type="button" class="delete-section" onclick="removeSection(this)">X</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" onclick="addNewSection('Event')">Add More</button>
+                </div>
+                
+                
+
+                <!-- Finance Information -->
+                <div id="Finance" class="edit-tabcontent">
+                    <h3>Finance Information</h3>
+                    <div class="sections-container">
+                        {% for record in finance_records %}
+                            <div class="section-fields">
+                                <hr class="section-divider">     
+                                <label for="transaction">Transaction</label>
+                                <input type="text" name="transaction" value="{{ record.transaction }}" class="form-control">
+                
+                                <label for="amount">Amount</label>
+                                <input type="number" step="0.01" name="amount" value="{{ record.amount }}" class="form-control">
+                
+                                <label for="finance_date">Date</label>
+                                <input type="date" name="finance_date" value="{{ record.date|date:"Y-m-d" }}" class="form-control">
+                
+                                <label for="finance_description">Description</label>
+                                <textarea name="finance_description" class="form-control" rows="3">{{ record.description }}</textarea>
+                
+                                <!-- Delete button to remove this section -->
+                                <button type="button" class="delete-section" onclick="removeSection(this)">X</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" onclick="addNewSection('Finance')">Add More</button>
+                
+                    <button type="submit" name="onboarding_submit">Save</button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    <script src="{% static 'js/home/edit.js' %}"></script>
+</body>

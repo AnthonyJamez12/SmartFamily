@@ -1,0 +1,189 @@
+<style>
+    /* Container for each section */
+    .section {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Main section title */
+    h3, h4 {
+        font-family: Arial, sans-serif;
+    }
+
+    /* Main dashboard title */
+    .dashboard h3 {
+        font-size: 2em;
+        color: #333;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+    }
+
+    /* Section headings */
+    .section h4 {
+        font-size: 1.5em;
+        color: #333;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 5px;
+    }
+
+    /* List styling */
+    .section ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .section ul li {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 6px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        color: #555;
+        line-height: 1.5;
+    }
+
+    /* Record details styling */
+    .record-details {
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* Empty message styling */
+    .empty-message {
+        color: #999;
+        font-style: italic;
+    }
+</style>
+
+<div class="dashboard">
+
+    <!-- Profile Overview -->
+    <div class="section">
+        <h3>Your Profile</h3>
+        <p><strong>First Name:</strong> {{ profile.first_name }}</p>
+        <p><strong>Last Name:</strong> {{ profile.last_name }}</p>
+        <p><strong>Birth Date:</strong> {{ profile.birth_date }}</p>
+        <p><strong>Gender:</strong> {{ profile.get_gender_display }}</p>
+        <p><strong>Role:</strong> {{ profile.get_role_display }}</p>
+    </div>
+
+    <!-- Health Records Section -->
+    <div class="section">
+        <h4>Health Records</h4>
+        {% if health_records %}
+            <ul>
+                {% for record in health_records %}
+                    <li>
+                        <span class="record-details">{{ record.condition }}</span> - {{ record.date_recorded }} 
+                        <br>
+                        Doctor: 
+                        {% if record.doctor %}
+                            {{ record.doctor.name }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-message">No health records found.</p>
+        {% endif %}
+    </div>
+
+    <!-- Education Records Section -->
+    <div class="section">
+        <h4>Education Records</h4>
+        {% if education_records %}
+            <ul>
+                {% for record in education_records %}
+                    <li>
+                        <span class="record-details">{{ record.school }}</span> - 
+                        {% if record.class_record %}
+                            {{ record.class_record.class_name }} (Grade: {{ record.class_record.grade }})
+                        {% else %}
+                            No Class
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-message">No education records found.</p>
+        {% endif %}
+    </div>
+
+    <!-- Events Section -->
+    <div class="section">
+        <h4>Events</h4>
+        {% if events %}
+            <ul>
+                {% for event in events %}
+                    <li>
+                        <span class="record-details">{{ event.event_name }}</span> on {{ event.event_date }} 
+                        <br>
+                        {{ event.event_description }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-message">No events found.</p>
+        {% endif %}
+    </div>
+
+    <!-- Finance Records Section -->
+    <div class="section">
+        <h4>Finance Records</h4>
+        {% if finance_records %}
+            <ul>
+                {% for record in finance_records %}
+                    <li>
+                        <span class="record-details">{{ record.transaction }}</span> - ${{ record.amount }} 
+                        on {{ record.date }}
+                        <br>
+                        {{ record.description }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-message">No finance records found.</p>
+        {% endif %}
+    </div>
+
+    <!-- Family Members Section -->
+    <div class="section">
+        <h4>Family Members</h4>
+        {% if family_members %}
+            <ul>
+                {% for member in family_members %}
+                    <li>
+                        <span class="record-details">{{ member.first_name }} {{ member.last_name }}</span> - {{ member.get_role_display }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-message">No family members found.</p>
+        {% endif %}
+    </div>
+
+    <!-- Doctors Section -->
+    <div class="section">
+        <h4>Doctors</h4>
+        {% if doctors %}
+            <ul>
+                {% for doctor in doctors %}
+                    <li>
+                        <span class="record-details">{{ doctor.name }}</span> 
+                        (Location: {{ doctor.location }} - Specialty: {{ doctor.specialty }})
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-message">No doctors found.</p>
+        {% endif %}
+    </div>
+</div>
