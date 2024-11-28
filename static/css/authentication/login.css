@@ -1,110 +1,156 @@
-/* Basic body styling */
+/* General reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Body and background */
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f0f4f8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+  background-color: wheat;
 }
 
-/* Container to hold the form */
+/* Navbar */
+.navbar {
+  overflow: hidden;
+  background-image: linear-gradient(#033747, #012733);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  z-index: 1000;
+}
+.navbar i {
+  color: white;
+  font-size: 20px;
+  margin-right: 10px;
+}
+.navbar h1 {
+  color: #f2f2f2;
+  font-size: 18px;
+  margin-right: auto;
+}
+.navbar a {
+  color: #f2f2f2;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 8px 12px;
+}
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+
+/* Container */
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+  margin-top: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+
+  margin: 100px auto 0 auto;
 }
 
-/* Styling for the form box */
+/* Slideshow */
+.slideshow-container {
+  flex: 1;
+  max-width: 60%;
+  margin-right: 20px;
+}
+.mySlides img {
+  width: 100%;
+  border-radius: 8px;
+}
+.numbertext {
+  position: absolute;
+  color: white;
+  font-size: 14px;
+  top: 10px;
+  left: 10px;
+}
+
+.my-image {
+  width: 100%; /* Make the image take up the full width of the parent container */
+  height: 600px; /* Set a fixed height */
+  object-fit: cover; /* Ensures images maintain their aspect ratio while filling the container */
+  border-radius: 10px; /* Optional: Add rounded corners */
+}
+
+
+/* Dots */
+.dot {
+  height: 12px;
+  width: 12px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 5px;
+  transition: background-color 0.6s ease;
+}
+.active {
+  background-color: #717171;
+}
+
+/* Form Box */
 .form-box {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
+  width: 700px; /* Increase the width */
+
+  padding: 50px; /* Add more padding for space */
+  background-image: linear-gradient(#033747, #012733);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
+  text-align: center;
 }
 
-/* Heading styling */
-h2 {
-    margin-bottom: 25px;
-    font-size: 1.75rem;
-    color: #333;
-    font-weight: 600;
-}
 
-/* Error/success messages */
-.messages {
-    color: red;
-    margin-bottom: 15px;
-    text-align: center;
+/* Form */
+.form-box h2 {
+  color: white;
+  margin-bottom: 20px;
 }
-
-/* Form styling */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-/* Input fields styling */
-.input-group {
-    text-align: left;
+.input-group input {
+  width: 100%;
+  padding: 300px; /* Increase padding for larger input fields */
+  font-size: 18px; /* Increase font size */
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Round the edges more */
 }
 
 .input-group label {
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 5px;
+  color: white;
+  display: block;
+  margin-bottom: 5px;
 }
-
-input[type="text"], 
-input[type="password"] {
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-    width: 100%;
-    transition: border-color 0.3s ease;
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
-
-input[type="text"]:focus, 
-input[type="password"]:focus {
-    border-color: #007bff;
-    outline: none;
+.input-group input:focus {
+  border-color: #007bff;
+  outline: none;
 }
-
-/* Submit button styling */
 button {
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
-
 button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
-
-/* Link styling */
-.link {
-    margin-top: 20px;
-    font-size: 14px;
-}
-
 .link a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: 500;
+  color: #007bff;
+  text-decoration: none;
 }
-
 .link a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }

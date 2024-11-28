@@ -34,3 +34,7 @@ def register_view(request):
         form = UserCreationForm()
     return render(request, 'authentication/register.html', {'form': form})
 
+
+def about_view(request):
+    return render(request, 'authentication/about.html')
+

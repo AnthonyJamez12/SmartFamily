@@ -1,6 +1,6 @@
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f7f7f7;
+    background-color: wheat;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-    background-color: #fff;
+    background-image: linear-gradient(#033747, #012733);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -19,7 +19,7 @@ body {
 
 h2 {
     text-align: center;
-    color: #333;
+    color: white;
     margin-bottom: 20px;
 }
 
@@ -161,4 +161,49 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #0056b3;
+}
+
+/* Labels */
+label {
+    color: white; /* Make label text white */
+}
+
+.tabcontent h3 {
+    color: white; /* Set text color to white */
+    font-size: 20px; /* Optional: Adjust font size */
+    margin-bottom: 15px; /* Optional: Add some spacing below */
+}
+
+/* Inputs and Selects */
+input[type="text"], 
+input[type="password"], 
+input[type="date"], 
+textarea, 
+select {
+    color: white; /* Make input text white */
+    background-color: transparent; /* Optional: Transparent background for dark themes */
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Placeholder Text */
+input::placeholder, 
+textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7); /* Lighten placeholder text */
+}
+
+/* Dropdown Options (for select elements) */
+select {
+    color: white; /* Make dropdown text white */
+    background-color: #033747; /* Match background to the theme */
+}
+
+/* Focused Input Styles */
+input:focus, 
+textarea:focus, 
+select:focus {
+    border-color: #007bff; /* Add a blue border for focus */
+    outline: none; /* Remove default outline */
 }

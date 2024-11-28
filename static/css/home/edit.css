@@ -9,7 +9,15 @@ body {
 }
 
 .container {
-    background-color: #fff;
+    background-color: wheat;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+
+}
+.container2 {
+    background-image: linear-gradient(#033747, #012733); 
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -17,10 +25,12 @@ body {
 
 }
 
-h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
+label {
+    color: white !important; /* Force label text to be white */
+}
+
+h1, h2, h3,h4 label {
+    color: white; /* Make all headings and labels white */
 }
 
 form {

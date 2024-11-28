@@ -5,15 +5,9 @@ from ...forms.home.home import FamilyMemberForm
 from ...forms.userOnboarding.userOnboarding import UserOnboardingForm
 from ...models import *
 from django.contrib.auth.models import User
-
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from ...forms.home.home import FamilyMemberForm
-from ...forms.userOnboarding.userOnboarding import UserOnboardingForm
-from ...models import *
-from django.contrib.auth.models import User
 import uuid
+from django.core.serializers.json import DjangoJSONEncoder
+import json
 
 @login_required
 def home_view(request):
@@ -33,7 +27,10 @@ def home_view(request):
     events = Event.objects.filter(profile=profile)
     finance_records = FinanceRecord.objects.filter(profile=profile)
     doctors = Doctor.objects.filter(healthrecord__profile=profile).distinct()
+    finance_records = FinanceRecord.objects.filter(profile=profile)
 
+    finance_labels = [record.transaction for record in finance_records]
+    finance_amounts = [float(record.amount) for record in finance_records]
     # Initialize forms
     onboarding_form = UserOnboardingForm(instance=profile)
     if request.method == 'POST':
@@ -148,6 +145,8 @@ def home_view(request):
         'doctors': doctors,
         'family_member_form': family_member_form,
         'onboarding_form': onboarding_form,
+        'finance_labels': json.dumps(finance_labels, cls=DjangoJSONEncoder),
+        'finance_amounts': json.dumps(finance_amounts, cls=DjangoJSONEncoder),
     }
 
     return render(request, 'home/home.html', context)

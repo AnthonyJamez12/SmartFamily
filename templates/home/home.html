@@ -11,38 +11,65 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            background-color: #f1f1f1;
-            border-bottom: 1px solid #ccc;
+            background-image: linear-gradient(#033747, #012733); /* Add gradient background */
+            border-bottom: 1px solid #012733; /* Match the darker gradient color */
+            padding: 10px;
+            border-radius: 5px; /* Slight rounding for smoother edges */
         }
         
         .tab-container button {
-            background-color: #f1f1f1;
-            border: none;
+            background-color: wheat; /* Base button color */
+            color: #033747; /* Dark text for contrast */
+            border: 1px solid #033747; /* Border matches dark gradient */
             outline: none;
             cursor: pointer;
             padding: 14px 20px;
-            transition: background-color 0.3s;
             font-size: 16px;
-            flex: 1; /* Make each tab equal width */
+            transition: all 0.3s ease;
+            flex: 1;
+            border-radius: 5px; /* Rounding for buttons */
         }
         
         .tab-container button:hover {
-            background-color: #ddd;
+            background-color: #033747; /* Hover matches darker gradient */
+            color: white; /* White text on hover */
         }
         
         .tab-container button.active {
-            background-color: #007bff;
+            background-color: #007bff; /* Active button with blue background */
             color: white;
+            border: none;
+        }
+        
+        .tab-container .logout-button {
+            background-color: #e63946; /* Logout button red */
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            border-radius: 5px;
+            margin-left: 10px; /* Space between tabs and logout */
+            transition: background-color 0.3s ease;
+        }
+        
+        .tab-container .logout-button:hover {
+            background-color: #d32f2f; /* Darker red on hover */
         }
         
         .tab-content {
             display: none;
             padding: 20px;
+            background-image: linear-gradient(#033747, #012733); /* Match modal colors */
+            color: white; /* Ensure text is white */
+            border-radius: 5px; /* Rounded corners for consistency */
         }
         
         .tab-content.active {
             display: block;
         }
+        
 
         .family-member {
             padding: 10px;
@@ -65,6 +92,7 @@
             <button class="tab-links" onclick="openTab2(event, 'Edit')">Edit</button>
             <button class="tab-links" onclick="openTab2(event, 'FamilyAdd')">Add Family</button>
             <button class="tab-links" onclick="openTab2(event, 'FamilyMembers')">Family Members</button>
+            <button class="tab-links" onclick="openTab2(event, 'Graphs')">Graphs</button>
 
             <a href="{% url 'logout' %}" class="logout-button">Logout</a>
         </div>
@@ -81,6 +109,26 @@
         <div id="FamilyAdd" class="tab-content">
             {% include 'home/addFamily.html' %}
         </div>
+
+        <div id="Graphs" class="tab-content" style="padding: 20px; text-align: center;">
+            <h3>Transaction Graphs</h3>
+        
+            <!-- Bar Chart -->
+            <div style="margin: 20px auto; display: inline-block; width: 400px; height: 300px;">
+                <canvas id="barChart" width="400" height="300"></canvas>
+            </div>
+        
+            <!-- Pie Chart -->
+            <div style="margin: 20px auto; display: inline-block; width: 300px; height: 300px;">
+                <canvas id="pieChart" width="300" height="300"></canvas>
+            </div>
+        
+            <!-- Hidden data for the graphs -->
+            <script id="financeLabels" type="application/json">{{ finance_labels|safe }}</script>
+            <script id="financeAmounts" type="application/json">{{ finance_amounts|safe }}</script>
+        </div>
+        
+        
 
         <!-- New Family Members Tab -->
         <div id="FamilyMembers" class="tab-content">
@@ -99,6 +147,10 @@
             {% endif %}
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Include Custom JavaScript -->
+    <script src="{% static 'js/home/graphs.js' %}"></script>
 
     <script>
         // Function to handle tab switching
